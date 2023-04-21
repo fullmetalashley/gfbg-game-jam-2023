@@ -1,0 +1,84 @@
+fileFormatVersion: 2
+guid: d6024d64568671341a2793e34c2a7b2e
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
+  sourceScripts:
+  - {fileID: 6391573757903218779, guid: 3551aebbaf897a843b5496826377011c, type: 3}
+  compileErrors: []
+  serializedDeclarations:
+  - name: $away_mission_readiness
+    typeName: Number
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: Implicitly declared in SpaceJourney_FinalVersion.yarn, node TalkToCaptain
+    isImplicit: 1
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 5e2ef4bb4e2714d818317ecf5623d62b, type: 3}
+  - name: $captain_is_friend
+    typeName: Bool
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: Implicitly declared in SpaceJourney_FinalVersion.yarn, node TalkToCaptain
+    isImplicit: 1
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 5e2ef4bb4e2714d818317ecf5623d62b, type: 3}
+  defaultLanguage: en-US
+  languagesToSourceAssets: []
+  useAddressableAssets: 0
+  searchAllAssembliesForActions: 1
+  assembliesToSearch: []
+  ListOfFunctions:
+  - Name: Random
+    ReturnType: -> Single
+    Parameters: []
+  - Name: RandomRange
+    ReturnType: -> Single
+    Parameters:
+    - minInclusive
+    - maxInclusive
+  - Name: Dice
+    ReturnType: -> Int32
+    Parameters:
+    - sides
+  - Name: Round
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: RoundPlaces
+    ReturnType: -> Single
+    Parameters:
+    - num
+    - places
+  - Name: Floor
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Ceil
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Inc
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Dec
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: Decimal
+    ReturnType: -> Single
+    Parameters:
+    - num
+  - Name: Int
+    ReturnType: -> Int32
+    Parameters:
+    - num
+  - Name: CoolFunction
+    ReturnType: -> Int32
+    Parameters: []
