@@ -10,4 +10,8 @@ public class TaTask : MonoBehaviour
     public bool currentlyActive;
 
     public float timeToComplete;
+
+    public string startingText;
+
+    public string itemToPickUp;
 }

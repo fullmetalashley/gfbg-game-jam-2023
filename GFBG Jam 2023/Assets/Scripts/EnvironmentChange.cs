@@ -7,6 +7,16 @@ public class EnvironmentChange : MonoBehaviour
     public List<GameObject> environments;
     public int currentIndex;
 
+    public List<string> environmentNames;
+    public string currentEnvironment;
+
+    private TaskManager _taskManager;
+
+    void Start()
+    {
+        _taskManager = FindObjectOfType<TaskManager>();
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -37,5 +47,9 @@ public class EnvironmentChange : MonoBehaviour
             currentIndex = environments.Count - 1;
         }
         environments[currentIndex].SetActive(true);
+        currentEnvironment = environmentNames[currentIndex];
+        
+        //Once the environment is changed, we check the task status.
+        _taskManager.UpdateTask();
     }
 }
