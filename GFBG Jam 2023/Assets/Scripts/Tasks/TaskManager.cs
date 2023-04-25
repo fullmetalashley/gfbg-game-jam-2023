@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TaskManager : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class TaskManager : MonoBehaviour
 
     private EnvironmentChange environmentController;
 
+    public bool haveItem;
+
     void Start()
     {
         environmentController = FindObjectOfType<EnvironmentChange>();
@@ -28,17 +32,40 @@ public class TaskManager : MonoBehaviour
         if (currentTask != null && currentTask.currentlyActive)
         {
             timer -= Time.deltaTime;
+            taskTimer.text = Mathf.RoundToInt(timer) + "";
             if (timer < 0)
             {
                 //This means the player has run out of time.
+                currentTask.currentlyActive = false;
+                currentTask = null;
+
+                taskText.text = "Task failed, sorry!";
+                StartCoroutine(TaskEndedDelay(3.0f));
             }
         }
+
+        //TODO: Adjust input key
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("You'll pick up an item here");
+            haveItem = true;
+            ItemCheck();
+        }
+    }
+
+    IEnumerator TaskEndedDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        taskUIAnim.SetBool("isActive", false);
     }
     
     public void RunTask(){
         //Get a task from the list of tasks. Choose a random one.
         int randomTask = Random.Range(0, allTasks.Count);
         TaTask thisTask = allTasks[randomTask];
+
+        currentTask = thisTask;
+        currentTask.currentlyActive = true;
         
         //Next step: Run the UI
         taskUIAnim.SetBool("isActive", true);
@@ -50,6 +77,34 @@ public class TaskManager : MonoBehaviour
         timer = thisTask.timeToComplete;
     }
 
+    //Checks to see the status of item grabbing / depositing.
+    public void ItemCheck()
+    {
+        //If we have the item, we need to check the room.
+        //If we don't have the item, we need to see if we're in the room where we get the item.
+
+        if (!haveItem)
+        {
+            if (currentTask.startingArea == environmentController.currentEnvironment)
+            {
+                //We're in the right room, give the player the item and update the text.
+                Debug.Log("You have the item");
+                haveItem = true;
+                UpdateTask();
+            }
+        }
+        else
+        {
+            //Check to see if we are in the right room to get the item
+            if (currentTask.startingArea == environmentController.currentEnvironment)
+            {
+                Debug.Log("You dropped off the item!");
+                EndTask();
+            }
+        }
+    }
+
+    //Updates the UI text based on where the player is in the environment.
     public void UpdateTask()
     {
         //Tasks update on a room change. 
@@ -60,7 +115,7 @@ public class TaskManager : MonoBehaviour
         //These might occur in the same room. Let's create a task.
         
         //First, if there is no active task, we need to run one.
-        if (currentTask != null)
+        if (currentTask == null)
         {
             RunTask();
         }
@@ -68,22 +123,35 @@ public class TaskManager : MonoBehaviour
         {
             //We have an active task. So let's break it down.
             //We can assume it has been started. We need to check what state of the task we're in.
+            if (environmentController.currentEnvironment != currentTask.endingArea)
+            {
+                taskText.text = "Not the right room, keep looking!";
+            }
+            else
+            {
+                taskText.text = currentTask.endingText;
+            }
         }
     }
 
     public void EndTask()
     {
+        currentTask.currentlyActive = false;
+        currentTask = null;
+
+        taskText.text = "Task succeeded, cool!";
         
+        StartCoroutine(TaskEndedDelay(3.0f));
     }
     
     public void TaskFailure()
     {
-        
+        //TODO: If a task is failed, skip to next sequence of character conversation. Do not allow question answer.
     }
 
     public void TaskSuccess()
     {
-        
+        //TODO: If a task is succeeded, allow question answer. 
     }
     
 }
