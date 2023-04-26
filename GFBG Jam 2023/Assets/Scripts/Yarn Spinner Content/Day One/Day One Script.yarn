@@ -1,0 +1,31 @@
+﻿title: Start
+---
+<<wait 5>>
+Me: Well...it certainly is Monday.
+<<debug_yarn TaskManager>>
+Me: I'm running a little late. I have a little time before Jim gets here, at least.
+Me: Where should I start...
+
+-> Wipe the counter
+    Me: Can't serve coffee on a nasty counter.
+    <<jump Jim_Enters>>
+-> Unload dishes
+    Me: Coffee neds cups! Can't use our hands.
+    <<jump Jim_Enters>>
+===
+title: Jim_Enters
+---
+Jim: Oh, hi, PLAYER. 
+Jim: Am I too early?
+Me: Of course not! I'm always open for you.
+Jim: Thanks. I'll just take the usual, whenever you're ready.
+Me: No problem. What are you up to today?
+Jim: Not much. Work, the usual. 
+Me: How's Sheila? 
+Jim: Fine. I'm sure she'll be in later. 
+<<jump Done>>
+===
+title: Done
+---
+Me: Here you go, Jim!
+===

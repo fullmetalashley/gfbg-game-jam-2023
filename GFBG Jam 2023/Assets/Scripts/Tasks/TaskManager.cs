@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Yarn.Unity;
 using Random = UnityEngine.Random;
 
 public class TaskManager : MonoBehaviour
@@ -59,6 +60,7 @@ public class TaskManager : MonoBehaviour
         taskUIAnim.SetBool("isActive", false);
     }
     
+    [YarnCommand("run_task")]
     public void RunTask(){
         //Get a task from the list of tasks. Choose a random one.
         int randomTask = Random.Range(0, allTasks.Count);
@@ -134,6 +136,12 @@ public class TaskManager : MonoBehaviour
         }
     }
 
+    [YarnCommand("debug_yarn")]
+    public void CalledFromYarn()
+    {
+        Debug.Log("Yarn called us!");
+    }
+    
     public void EndTask()
     {
         currentTask.currentlyActive = false;
@@ -147,6 +155,7 @@ public class TaskManager : MonoBehaviour
     public void TaskFailure()
     {
         //TODO: If a task is failed, skip to next sequence of character conversation. Do not allow question answer.
+        
     }
 
     public void TaskSuccess()
