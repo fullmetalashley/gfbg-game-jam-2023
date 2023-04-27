@@ -23,11 +23,17 @@ public class TaskManager : MonoBehaviour
 
     public bool haveItem;
 
-    private bool succeeded;
+    public bool succeeded;
+
+    private InMemoryVariableStorage _variableStorage;
+    private DialogueRunner runner;
 
     void Start()
     {
         environmentController = FindObjectOfType<EnvironmentChange>();
+        _variableStorage = FindObjectOfType<InMemoryVariableStorage>();
+        runner = FindObjectOfType<DialogueRunner>();
+        runner.AddFunction<bool>("return_success", ReturnSuccess);
     }
     
     void Update()
@@ -41,8 +47,7 @@ public class TaskManager : MonoBehaviour
         //TODO: Adjust input key
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("You'll pick up an item here");
-            haveItem = true;
+            UpdateTaskUI();
             ItemCheck();
         }
     }
@@ -58,8 +63,7 @@ public class TaskManager : MonoBehaviour
         //Get a task from the list of tasks. Choose a random one.
         succeeded = false;
         
-        int randomTask = Random.Range(0, allTasks.Count);
-        TaTask thisTask = allTasks[randomTask];
+        TaTask thisTask = allTasks[Random.Range(0, allTasks.Count)];
 
         currentTask = thisTask;
         currentTask.currentlyActive = true;
@@ -82,54 +86,34 @@ public class TaskManager : MonoBehaviour
 
         if (!haveItem)
         {
-            if (currentTask.startingArea == environmentController.currentEnvironment)
-            {
-                //We're in the right room, give the player the item and update the text.
-                Debug.Log("You have the item");
-                haveItem = true;
-                UpdateTask();
-            }
+            if (!RoomMatch(currentTask.startingArea)) return;
+            //We are in the right room to pick an item up. 
+            haveItem = true;
+            UpdateTaskUI();
         }
         else
         {
-            //Check to see if we are in the right room to get the item
-            if (currentTask.startingArea == environmentController.currentEnvironment)
-            {
-                Debug.Log("You dropped off the item!");
-                succeeded = true;
-                StopAllCoroutines();
-                EndTask();
-            }
+            if (!RoomMatch(currentTask.endingArea)) return;
+            haveItem = false;
+            succeeded = true;
+            StopAllCoroutines();
+            EndTask();
         }
     }
 
     //Updates the UI text based on where the player is in the environment.
-    public void UpdateTask()
+    public void UpdateTaskUI()
     {
-        //Tasks update on a room change. 
-        //We check tasks in a few stages:
-        //1. Starting room, populate starting text and start timer
-        //2. Room of item pickup, change text
-        //3. Room of item deposit, change text and end timer
-        //These might occur in the same room. Let's create a task.
-        
-        //First, if there is no active task, we need to run one.
-        if (currentTask == null)
+        if (currentTask == null) return;
+        //We have an active task. So let's break it down.
+        if (!haveItem)
         {
-            RunTask();
+            //We need to get to the starting area.
+            taskText.text = !RoomMatch(currentTask.startingArea) ? currentTask.startingText : "You are in the right room! Press space!";
         }
         else
         {
-            //We have an active task. So let's break it down.
-            //We can assume it has been started. We need to check what state of the task we're in.
-            if (environmentController.currentEnvironment != currentTask.endingArea)
-            {
-                taskText.text = "Not the right room, keep looking!";
-            }
-            else
-            {
-                taskText.text = currentTask.endingText;
-            }
+            taskText.text = !RoomMatch(currentTask.endingArea) ? currentTask.endingText : "Press space to drop the item here!";
         }
     }
 
@@ -155,17 +139,16 @@ public class TaskManager : MonoBehaviour
         taskText.text = succeeded ? "Task succeeded, cool!" : "Task failed, yikes";
 
         StartCoroutine(TaskEndedDelay(3.0f));
-    }
-    
-    public void TaskFailure()
-    {
-        //TODO: If a task is failed, skip to next sequence of character conversation. Do not allow question answer.
         
     }
 
-    public void TaskSuccess()
+    private bool ReturnSuccess()
     {
-        //TODO: If a task is succeeded, allow question answer. 
+        return succeeded;
     }
-    
+
+    public bool RoomMatch(string room)
+    {
+        return (environmentController.currentEnvironment == room);
+    }
 }

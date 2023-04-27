@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnvironmentChange : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class EnvironmentChange : MonoBehaviour
     public string currentEnvironment;
 
     private TaskManager _taskManager;
+
+    public TextMeshProUGUI currentLocation;
 
     void Start()
     {
@@ -48,8 +52,9 @@ public class EnvironmentChange : MonoBehaviour
         }
         environments[currentIndex].SetActive(true);
         currentEnvironment = environmentNames[currentIndex];
+        currentLocation.text = currentEnvironment;
         
         //Once the environment is changed, we check the task status.
-        _taskManager.UpdateTask();
+        _taskManager.UpdateTaskUI();
     }
 }

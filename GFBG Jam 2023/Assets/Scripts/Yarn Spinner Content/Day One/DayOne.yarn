@@ -2,11 +2,8 @@ title: Start
 position: -87,-189
 ---
 <<set $Jim_A to 0>>
-<<set $Jim_B to 0>>
-<<set $Jim_C to 0>>
 
 TESS: Morning, sunshine. Glad to see you had no trouble finding the place.
-<<custom_wait TaskManager>>
 TESS: Though I guess the smell of that old house blend is hard to miss.
 TESS: Your cousins always told me I smelled like coffee when I'd come home. That and how corny the name is. Greene Beans.
 TESS: But anyway, I suppose we should get down to business before customers start rolling in.
@@ -19,6 +16,7 @@ TESS: On top of keeping the coffee brewing and the conversation going, there're 
 TESS: It's all real simple, don't worry. Keep the counter clean, sweep up every now and then, take out the trash, easy things like that.
 TESS: I'm sure you'll get the hang of it in no time. Jim's usually first one in and he's always real simple. House blend with two sugars and he'll talk your ear off.
 TESS: I'll be in the back if you need me.
+<<custom_wait TaskManager>>
 SFX: *click*
 SFX: *clip clop clip clop*
 SFX: *ding-a-ling*
@@ -39,17 +37,35 @@ JIM: What made you decide to come? Not much around here for a young person and y
 JIM: Well, I'm sure you'll get used to Greeneville in no time.
 JIM: Don't suppose Tess told you how I like my coffee, did she?
 
+<<custom_wait TaskManager>>
+<<if return_success()>>
+    <<jump Question1Success>>
+<<else>>
+    <<jump Question1Fail>>
+<<endif>>
+
+===
+title: Question1Success
+---
 -> House blend, two sugars.
     JIM: You betcha. Been the same order every day. Tess says she can set her watch by me, I'm a man of routine.
     <<set $Jim_A to 2>>
 -> Black.
     JIM: I may be in old man, but I've had enough bitterness for one lifetime. I like a little sweetness to start off my day. House blend, two sugars, if you don't mind.
-    <<set $Jim_B to 1>>
+    <<set $Jim_A to 1>>
 -> Two creams, two sugars.
     JIM: Tess must be getting my order confused with Shirley's again. My wife wasn't even a coffee drinker before she met me. Hot tea. Still has it sometimes before bed. One of those fancy teas. Camel-something.
     JIM: Anyway, I like the house blend. Two sugars, please.
-    <<set $Jim_C to 1>>
-
+    <<set $Jim_A to 0>>
+<<jump Question1Continue>>
+===
+title: Question1Fail
+---
+JIM: I guess plain black is fine. I'll add the sugars myself.
+<<jump Question1Continue>>
+===
+title: Question1Continue
+---
 JIM: You don't mind if I cut on the radio, do ya?
 SFX: *click*
 ANNOUNCER: And now for the weather...
@@ -102,7 +118,7 @@ TESS: Well, I better be getting back to it.
     TESS: Lock up and go home.
 <<endif>>
 
-<<if $Jim_B == 1>>
+<<if $Jim_A == 1>>
     SFX: *thud*
     SFX: *bang*
     TESS: What in the world...?
@@ -119,7 +135,7 @@ TESS: Well, I better be getting back to it.
     TESS: Go on, go! I'll take care of Jim...
 <<endif>>
 
-<<if $Jim_C == 1>>
+<<if $Jim_A == 0>>
     SFX: *ding-a-ling*
     SFX: *thud!*
     TESS: Jim!
@@ -143,6 +159,14 @@ TESS: Well, I better be getting back to it.
     TESS: Lock up and go home.
 <<endif>>
 
+===
+title: Done
+---
+Me: That was...horrible. I hope he'll be alright.
 
+===
+title: Fail
+---
+Me: I've never seen something like that. I won't forget it.
 
 ===
