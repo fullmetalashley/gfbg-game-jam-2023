@@ -452,14 +452,14 @@ MonoBehaviour:
   - startingArea: Kitchen
     endingArea: Counter
     currentlyActive: 0
-    timeToComplete: 20
+    timeToComplete: 5
     startingText: Take the mugs to the sink!
     endingText: Press space to deposit the mugs!
     itemToPickUp: Mugs
   - startingArea: Counter
     endingArea: Street
     currentlyActive: 0
-    timeToComplete: 0
+    timeToComplete: 5
     startingText: Take out the trash!
     endingText: Press space to drop the trash!
     itemToPickUp: Trash

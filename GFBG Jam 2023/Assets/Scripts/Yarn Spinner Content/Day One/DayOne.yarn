@@ -1,4 +1,4 @@
-title: StartDayOne
+title: Start
 position: -87,-189
 ---
 <<set $Jim_A to 0>>
@@ -6,6 +6,7 @@ position: -87,-189
 <<set $Jim_C to 0>>
 
 TESS: Morning, sunshine. Glad to see you had no trouble finding the place.
+<<custom_wait TaskManager>>
 TESS: Though I guess the smell of that old house blend is hard to miss.
 TESS: Your cousins always told me I smelled like coffee when I'd come home. That and how corny the name is. Greene Beans.
 TESS: But anyway, I suppose we should get down to business before customers start rolling in.
@@ -27,32 +28,27 @@ JIM: They've been real lost without Fern and Jay around. But they both perked ri
 JIM: What made you decide to come? Not much around here for a young person and your parents aren't from here either.
 
 -> It's cheaper to live here.
-JIM: Sure is. One of the cheapest places in the Midwest. But no young people want to move out here to the sticks. Too boring. Not enough to do.
-
+    JIM: Sure is. One of the cheapest places in the Midwest. But no young people want to move out here to the sticks. Too boring. Not enough to do.
 -> I wanted to escape the rat race.
-JIM: Yeah, but when you're young, you gotta pay your dues. Work hard. And remember, there's rats no matter where you go.
-
+    JIM: Yeah, but when you're young, you gotta pay your dues. Work hard. And remember, there's rats no matter where you go.
 -> My aunt and uncle always made it sound so nice.
-JIM: You must be close with them. Greeneville is a nice place. Quiet. Most times anyway.
-
+    JIM: You must be close with them. Greeneville is a nice place. Quiet. Most times anyway.
 -> It's temporary until I figure out what I'm doing.
-JIM: Yeah, I guess no young person'd move here by choice, huh?
+    JIM: Yeah, I guess no young person'd move here by choice, huh?
 
 JIM: Well, I'm sure you'll get used to Greeneville in no time.
 JIM: Don't suppose Tess told you how I like my coffee, did she?
 
 -> House blend, two sugars.
-JIM: You betcha. Been the same order every day. Tess says she can set her watch by me, I'm a man of routine.
-<<set $Jim_A to 2>>
-
+    JIM: You betcha. Been the same order every day. Tess says she can set her watch by me, I'm a man of routine.
+    <<set $Jim_A to 2>>
 -> Black.
-JIM: I may be in old man, but I've had enough bitterness for one lifetime. I like a little sweetness to start off my day. House blend, two sugars, if you don't mind.
-<<set $Jim_B to 1>>
-
+    JIM: I may be in old man, but I've had enough bitterness for one lifetime. I like a little sweetness to start off my day. House blend, two sugars, if you don't mind.
+    <<set $Jim_B to 1>>
 -> Two creams, two sugars.
-JIM: Tess must be getting my order confused with Shirley's again. My wife wasn't even a coffee drinker before she met me. Hot tea. Still has it sometimes before bed. One of those fancy teas. Camel-something.
-JIM: Anyway, I like the house blend. Two sugars, please.
-<<set $Jim_C to 1>>
+    JIM: Tess must be getting my order confused with Shirley's again. My wife wasn't even a coffee drinker before she met me. Hot tea. Still has it sometimes before bed. One of those fancy teas. Camel-something.
+    JIM: Anyway, I like the house blend. Two sugars, please.
+    <<set $Jim_C to 1>>
 
 JIM: You don't mind if I cut on the radio, do ya?
 SFX: *click*
@@ -74,13 +70,11 @@ TESS: He and your uncle go way back. Ol' Jim's what you might call a fixture aro
 TESS: Did I hear them say snow tomorrow? Guess you didn't get a lot of March snow back home, did ya?
 
 -> I'm ready for it. My car, not so much.
-TESS: We can get Otto to take a look at it later. He may not look it, but your uncle's pretty handy.
-
+    TESS: We can get Otto to take a look at it later. He may not look it, but your uncle's pretty handy.
 -> I live for snow.
-TESS: Oh, you say that now. I hope you brought your snow boots.
-
+    TESS: Oh, you say that now. I hope you brought your snow boots.
 -> Maybe I'll just stay home with some cocoa tonight.
-TESS: Just make sure you dig out so you can get in tomorrow. Rain or snow, storm or shine, Greene Beans is always open.
+    TESS: Just make sure you dig out so you can get in tomorrow. Rain or snow, storm or shine, Greene Beans is always open.
 
 TESS: Well, I better be getting back to it.
 

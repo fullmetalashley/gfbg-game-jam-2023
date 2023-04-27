@@ -23,6 +23,8 @@ public class TaskManager : MonoBehaviour
 
     public bool haveItem;
 
+    private bool succeeded;
+
     void Start()
     {
         environmentController = FindObjectOfType<EnvironmentChange>();
@@ -34,15 +36,6 @@ public class TaskManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
             taskTimer.text = Mathf.RoundToInt(timer) + "";
-            if (timer < 0)
-            {
-                //This means the player has run out of time.
-                currentTask.currentlyActive = false;
-                currentTask = null;
-
-                taskText.text = "Task failed, sorry!";
-                StartCoroutine(TaskEndedDelay(3.0f));
-            }
         }
 
         //TODO: Adjust input key
@@ -63,6 +56,8 @@ public class TaskManager : MonoBehaviour
     [YarnCommand("run_task")]
     public void RunTask(){
         //Get a task from the list of tasks. Choose a random one.
+        succeeded = false;
+        
         int randomTask = Random.Range(0, allTasks.Count);
         TaTask thisTask = allTasks[randomTask];
 
@@ -101,6 +96,8 @@ public class TaskManager : MonoBehaviour
             if (currentTask.startingArea == environmentController.currentEnvironment)
             {
                 Debug.Log("You dropped off the item!");
+                succeeded = true;
+                StopAllCoroutines();
                 EndTask();
             }
         }
@@ -136,19 +133,27 @@ public class TaskManager : MonoBehaviour
         }
     }
 
+    [YarnCommand("custom_wait")]
+    IEnumerator StartTimer()
+    {
+        RunTask();
+        yield return new WaitForSeconds(currentTask.timeToComplete);
+        EndTask();
+    }
+
     [YarnCommand("debug_yarn")]
     public void CalledFromYarn()
     {
         Debug.Log("Yarn called us!");
     }
-    
+
     public void EndTask()
     {
         currentTask.currentlyActive = false;
         currentTask = null;
 
-        taskText.text = "Task succeeded, cool!";
-        
+        taskText.text = succeeded ? "Task succeeded, cool!" : "Task failed, yikes";
+
         StartCoroutine(TaskEndedDelay(3.0f));
     }
     
