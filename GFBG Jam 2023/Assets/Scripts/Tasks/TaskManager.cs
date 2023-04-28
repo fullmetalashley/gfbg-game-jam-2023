@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Random = UnityEngine.Random;
 
@@ -150,5 +151,12 @@ public class TaskManager : MonoBehaviour
     public bool RoomMatch(string room)
     {
         return (environmentController.currentEnvironment == room);
+    }
+
+    [YarnCommand("end_game")]
+    IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(2.5f);
+        SceneManager.LoadScene(0);
     }
 }

@@ -163,10 +163,10 @@ TESS: Well, I better be getting back to it.
 title: Done
 ---
 Me: That was...horrible. I hope he'll be alright.
-
+<<end_game TaskManager>>
 ===
 title: Fail
 ---
 Me: I've never seen something like that. I won't forget it.
-
+<<end_game TaskManager>>
 ===

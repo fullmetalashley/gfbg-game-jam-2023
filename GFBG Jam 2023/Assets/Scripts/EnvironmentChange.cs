@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Yarn.Unity;
 
 public class EnvironmentChange : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class EnvironmentChange : MonoBehaviour
     private TaskManager _taskManager;
 
     public TextMeshProUGUI currentLocation;
+
+    private DialogueRunner _dialogueRunner;
 
     void Start()
     {
@@ -38,6 +41,7 @@ public class EnvironmentChange : MonoBehaviour
     //Not sure we'll stay with this method, but for now, it's fine
     public void ChangeEnvironment(int direction)
     {
+        if (_dialogueRunner.IsDialogueRunning) return;
         environments[currentIndex].SetActive(false);
         currentIndex += direction;
 
@@ -50,10 +54,11 @@ public class EnvironmentChange : MonoBehaviour
         {
             currentIndex = environments.Count - 1;
         }
+
         environments[currentIndex].SetActive(true);
         currentEnvironment = environmentNames[currentIndex];
         currentLocation.text = currentEnvironment;
-        
+
         //Once the environment is changed, we check the task status.
         _taskManager.UpdateTaskUI();
     }
